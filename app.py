@@ -1,12 +1,10 @@
 import streamlit as st
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 st.set_page_config(page_title="AI Translator", page_icon="🌍")
 
 st.title("🌍 AI Language Translator")
-st.write("Translate text instantly using AI 🚀")
-
-translator = Translator()
+st.write("Translate text instantly 🚀")
 
 text = st.text_area("Enter text")
 
@@ -28,7 +26,15 @@ with col2:
 
 if st.button("Translate"):
     if text:
-        result = translator.translate(text, src=languages[src], dest=languages[dest])
-        st.success(result.text)
+        try:
+            translated = GoogleTranslator(
+                source=languages[src],
+                target=languages[dest]
+            ).translate(text)
+
+            st.success(translated)
+
+        except Exception as e:
+            st.error("Translation failed. Try again.")
     else:
         st.warning("Enter text first")
