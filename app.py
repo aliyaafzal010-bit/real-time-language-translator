@@ -163,12 +163,24 @@ if st.button("🚀 Translate Now"):
             # -------- DETECT LANGUAGE --------
             detected_lang = detect(text)
 
-            detected_name = "Unknown"
+            language_names = {
+                 "en": "English",
+                 "hi": "Hindi",
+                 "fr": "French",
+                 "de": "German",
+                 "es": "Spanish",
+                 "ar": "Arabic",
+                 "zh-cn": "Chinese",
+                 "ja": "Japanese",
+                 "ko": "Korean",
+                 "ru": "Russian"
+                     }
 
-            for lang_name, lang_code in languages.items():
-                if lang_code.startswith(detected_lang):
-                    detected_name = lang_name
-
+                detected_name = language_names.get(
+                  detected_lang.lower(),
+                  detected_lang.upper()
+                )
+   
             st.markdown(
                 f"""
                 <div class='detect-box'>
