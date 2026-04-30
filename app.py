@@ -176,7 +176,7 @@ if st.button("🚀 Translate Now"):
                  "ru": "Russian"
                      }
 
-                detected_name = language_names.get(
+             detected_name = language_names.get(
                   detected_lang.lower(),
                   detected_lang.upper()
                 )
