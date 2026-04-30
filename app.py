@@ -1,13 +1,12 @@
 import streamlit as st
 from deep_translator import GoogleTranslator
 from gtts import gTTS
-import base64
-import os
+from langdetect import detect
 from datetime import datetime
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
-    page_title="AI Language Translator",
+    page_title="AI Translator",
     page_icon="🌍",
     layout="wide"
 )
@@ -17,14 +16,14 @@ st.markdown("""
 <style>
 
 .stApp {
-    background: linear-gradient(to right, #141e30, #243b55);
+    background: linear-gradient(to right, #8E2DE2, #FF6FD8);
     color: white;
     font-family: 'Poppins', sans-serif;
 }
 
 .main-title {
     text-align: center;
-    font-size: 50px;
+    font-size: 52px;
     font-weight: bold;
     color: white;
     margin-top: 10px;
@@ -33,44 +32,58 @@ st.markdown("""
 .subtitle {
     text-align: center;
     font-size: 20px;
-    color: #dcdcdc;
-    margin-bottom: 30px;
+    color: #f1f1f1;
+    margin-bottom: 35px;
 }
 
 .glass {
-    background: rgba(255,255,255,0.1);
-    padding: 25px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    background: rgba(255,255,255,0.15);
+    padding: 30px;
+    border-radius: 25px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.stTextArea textarea {
+    border-radius: 15px;
+    background: rgba(255,255,255,0.12);
+    color: white;
+}
+
+.stSelectbox div[data-baseweb="select"] {
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
 }
 
 .stButton>button {
     width: 100%;
-    border-radius: 12px;
-    height: 50px;
+    height: 52px;
+    border-radius: 15px;
+    border: none;
     font-size: 18px;
     font-weight: bold;
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: white;
-    border: none;
+    background: linear-gradient(to right, #00F5A0, #00D9F5);
+    color: black;
 }
 
 .stButton>button:hover {
-    background: linear-gradient(to right, #0072ff, #00c6ff);
-    color: white;
+    transform: scale(1.02);
 }
 
 .output-box {
-    background: rgba(255,255,255,0.15);
-    padding: 20px;
-    border-radius: 15px;
-    font-size: 20px;
-    margin-top: 20px;
+    background: rgba(255,255,255,0.18);
+    padding: 22px;
+    border-radius: 18px;
+    margin-top: 25px;
+    font-size: 22px;
 }
 
-.sidebar .sidebar-content {
-    background: #111827;
+.detect-box {
+    background: rgba(0,0,0,0.2);
+    padding: 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+    font-size: 18px;
 }
 
 </style>
@@ -83,26 +96,23 @@ st.markdown(
 )
 
 st.markdown(
-    "<div class='subtitle'>Translate text instantly with AI-powered NLP technology 🚀</div>",
+    "<div class='subtitle'>Translate any language instantly using AI 🚀</div>",
     unsafe_allow_html=True
 )
 
 # ---------------- SIDEBAR ----------------
-st.sidebar.title("📌 About App")
+st.sidebar.title("✨ Features")
 
 st.sidebar.info("""
-### 🌟 Features
-✅ Real-time Translation  
-✅ Multiple Languages  
-✅ AI-powered NLP  
-✅ Text-to-Speech  
-✅ Beautiful UI  
-
-### 👩‍💻 Developer
-Aliya Afzal
+✅ Auto Language Detection  
+✅ AI Translation  
+✅ Text to Speech  
+✅ Download Translation  
+✅ Translation History  
 """)
 
 st.sidebar.markdown("---")
+st.sidebar.write("👩‍💻 Developed by Aliya Afzal")
 
 # ---------------- LANGUAGES ----------------
 languages = {
@@ -118,59 +128,65 @@ languages = {
     "Russian": "ru"
 }
 
-# ---------------- MAIN CONTAINER ----------------
+# ---------------- MAIN UI ----------------
 with st.container():
 
     st.markdown("<div class='glass'>", unsafe_allow_html=True)
 
     text = st.text_area(
         "✍ Enter Text",
-        height=180,
-        placeholder="Type something to translate..."
+        height=200,
+        placeholder="Type any language here..."
     )
 
-    col1, col2 = st.columns(2)
+    target_lang = st.selectbox(
+        "🌍 Translate To",
+        list(languages.keys())
+    )
 
-    with col1:
-        source_lang = st.selectbox(
-            "🌐 From",
-            list(languages.keys())
-        )
-
-    with col2:
-        target_lang = st.selectbox(
-            "🌍 To",
-            list(languages.keys()),
-            index=1
-        )
-
-    # ---------------- TRANSLATE BUTTON ----------------
     if st.button("🚀 Translate Now"):
 
         if text.strip() == "":
-            st.warning("⚠ Please enter some text")
+            st.warning("⚠ Please enter text")
 
         else:
             try:
 
+                # -------- AUTO DETECT --------
+                detected_lang = detect(text)
+
+                detected_name = "Unknown"
+
+                for lang_name, lang_code in languages.items():
+                    if lang_code.startswith(detected_lang):
+                        detected_name = lang_name
+
+                st.markdown(
+                    f"""
+                    <div class='detect-box'>
+                    🔍 Detected Language: <b>{detected_name}</b>
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+
+                # -------- TRANSLATION --------
                 translated = GoogleTranslator(
-                    source=languages[source_lang],
+                    source='auto',
                     target=languages[target_lang]
                 ).translate(text)
-
-                st.success("✅ Translation Successful")
 
                 st.markdown(
                     f"""
                     <div class='output-box'>
-                    <b>Translated Text:</b><br><br>
+                    <b>✨ Translated Text:</b><br><br>
                     {translated}
                     </div>
                     """,
                     unsafe_allow_html=True
                 )
 
-                # ---------------- TEXT TO SPEECH ----------------
+                # -------- AUDIO --------
                 tts = gTTS(translated)
                 tts.save("translation.mp3")
 
@@ -179,7 +195,7 @@ with st.container():
 
                 st.audio(audio_bytes, format="audio/mp3")
 
-                # ---------------- DOWNLOAD BUTTON ----------------
+                # -------- DOWNLOAD --------
                 st.download_button(
                     label="⬇ Download Translation",
                     data=translated,
@@ -187,7 +203,7 @@ with st.container():
                     mime="text/plain"
                 )
 
-                # ---------------- HISTORY ----------------
+                # -------- HISTORY --------
                 current_time = datetime.now().strftime("%H:%M:%S")
 
                 if "history" not in st.session_state:
@@ -201,34 +217,17 @@ with st.container():
                     }
                 )
 
-            except Exception as e:
+            except:
                 st.error("❌ Translation Failed")
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ---------------- HISTORY SECTION ----------------
-if "history" in st.session_state:
 
-    st.markdown("## 🕓 Translation History")
-
-    for item in reversed(st.session_state.history):
-
-        st.markdown(f"""
-        <div class='glass' style='margin-bottom:15px;'>
-        ⏰ <b>{item['time']}</b><br><br>
-
-        <b>Input:</b><br>
-        {item['input']}<br><br>
-
-        <b>Output:</b><br>
-        {item['output']}
-        </div>
-        """, unsafe_allow_html=True)
 
 # ---------------- FOOTER ----------------
 st.markdown("""
 <br><br>
 <center>
-Made with ❤️ using Streamlit & AI
+✨ Built with Streamlit & AI
 </center>
 """, unsafe_allow_html=True)
