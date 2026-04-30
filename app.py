@@ -31,7 +31,7 @@ html, body, [class*="css"] {
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
-/* Main Heading */
+/* Main Title */
 .main-title {
     text-align: center;
     font-size: 58px;
@@ -48,9 +48,16 @@ header {visibility: hidden;}
     margin-bottom: 40px;
 }
 
+/* Labels */
+label {
+    color: #2d2d2d !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
+}
+
 /* Text Area */
 .stTextArea textarea {
-    background: rgba(255,255,255,0.55) !important;
+    background: rgba(255,255,255,0.75) !important;
     color: #222 !important;
     border-radius: 20px !important;
     border: 1px solid rgba(255,255,255,0.4) !important;
@@ -65,13 +72,17 @@ header {visibility: hidden;}
 
 /* Select Box */
 .stSelectbox div[data-baseweb="select"] {
-    background: rgba(255,255,255,0.55) !important;
+    background: rgba(255,255,255,0.75) !important;
     border-radius: 16px !important;
-    color: #222 !important;
     border: 1px solid rgba(255,255,255,0.4);
 }
 
-/* Button */
+.stSelectbox * {
+    color: #222 !important;
+    font-weight: 500;
+}
+
+/* Translate Button */
 .stButton > button {
     width: 100%;
     height: 55px;
@@ -80,7 +91,7 @@ header {visibility: hidden;}
     font-size: 18px;
     font-weight: 600;
     color: white;
-    background: linear-gradient(to right, #7F7FD5, #86A8E7);
+    background: linear-gradient(to right, #6a5acd, #7b68ee);
     transition: 0.3s ease;
     box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 }
@@ -89,13 +100,26 @@ header {visibility: hidden;}
     transform: translateY(-2px);
 }
 
+/* Download Button */
+.stDownloadButton > button {
+    width: 100%;
+    height: 52px;
+    border-radius: 16px;
+    border: none;
+    font-size: 17px;
+    font-weight: 600;
+    background: linear-gradient(to right, #6a5acd, #7b68ee);
+    color: white !important;
+    margin-top: 15px;
+}
+
 /* Detection Card */
 .detect-card {
     background: rgba(255,255,255,0.45);
     padding: 15px;
     border-radius: 18px;
     margin-top: 25px;
-    border-left: 5px solid #7F7FD5;
+    border-left: 5px solid #6a5acd;
     font-size: 18px;
     color: #222;
 }
@@ -184,13 +208,13 @@ target_lang = st.selectbox(
     list(languages.keys())
 )
 
-# ---------------- CENTER BUTTON ----------------
+# ---------------- BUTTON ----------------
 col1, col2, col3 = st.columns([1,2,1])
 
 with col2:
     translate = st.button("🚀 Translate Now")
 
-# ---------------- TRANSLATE ----------------
+# ---------------- TRANSLATION ----------------
 if translate:
 
     if text.strip() == "":
@@ -200,7 +224,7 @@ if translate:
 
         try:
 
-            # -------- SMART DETECTION --------
+            # Smart English Detection
             common_english_words = [
                 "hello", "hi", "i", "am", "my",
                 "name", "how", "are", "you",
@@ -214,7 +238,7 @@ if translate:
             else:
                 detected_lang = detect(text)
 
-            # -------- LANGUAGE NAMES --------
+            # Language Names
             language_names = {
                 "en": "English",
                 "hi": "Hindi",
@@ -233,7 +257,7 @@ if translate:
                 detected_lang.upper()
             )
 
-            # -------- DETECTION CARD --------
+            # Detection Card
             st.markdown(
                 f"""
                 <div class='detect-card'>
@@ -243,7 +267,7 @@ if translate:
                 unsafe_allow_html=True
             )
 
-            # -------- TRANSLATION --------
+            # Translation
             with st.spinner("✨ Translating..."):
 
                 translated = GoogleTranslator(
@@ -253,7 +277,7 @@ if translate:
 
             st.toast("Translation completed ✨")
 
-            # -------- OUTPUT --------
+            # Output Card
             st.markdown(
                 f"""
                 <div class='output-card'>
@@ -264,7 +288,7 @@ if translate:
                 unsafe_allow_html=True
             )
 
-            # -------- AUDIO --------
+            # Audio
             tts = gTTS(translated)
             tts.save("translation.mp3")
 
@@ -273,7 +297,7 @@ if translate:
 
             st.audio(audio_bytes, format="audio/mp3")
 
-            # -------- DOWNLOAD --------
+            # Download Button
             st.download_button(
                 label="⬇ Download Translation",
                 data=translated,
