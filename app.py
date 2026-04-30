@@ -14,85 +14,124 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-.stApp {
-    background: linear-gradient(to right, #fc5c7d, #6a82fb);
-    color: white;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+html, body, [class*="css"] {
     font-family: 'Poppins', sans-serif;
 }
 
+.stApp {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff758c 100%);
+    background-attachment: fixed;
+    color: white;
+}
+
+/* Hide Streamlit menu/footer */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Main Title */
 .main-title {
     text-align: center;
-    font-size: 52px;
-    font-weight: bold;
+    font-size: 58px;
+    font-weight: 700;
     color: white;
-    margin-top: 10px;
+    margin-top: 15px;
+    letter-spacing: 1px;
 }
 
 .subtitle {
     text-align: center;
     font-size: 20px;
-    color: #f1f1f1;
-    margin-bottom: 35px;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 40px;
 }
 
-.glass {
-    background: rgba(255,255,255,0.15);
+/* Glass Card */
+.glass-card {
+    background: rgba(255,255,255,0.12);
     padding: 35px;
-    border-radius: 25px;
-    backdrop-filter: blur(14px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    border-radius: 28px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
 }
 
+/* Text Area */
 .stTextArea textarea {
-    border-radius: 18px;
-    background: rgba(255,255,255,0.12);
-    color: white;
-    font-size: 18px;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,0.10) !important;
+    color: white !important;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+    font-size: 18px !important;
+    padding: 15px !important;
 }
 
+.stTextArea textarea::placeholder {
+    color: rgba(255,255,255,0.6) !important;
+}
+
+/* Select Box */
 .stSelectbox div[data-baseweb="select"] {
-    background: rgba(255,255,255,0.12);
-    border-radius: 12px;
+    background: rgba(255,255,255,0.10) !important;
+    border-radius: 14px !important;
+    color: white !important;
 }
 
-.stButton>button {
+/* Button */
+.stButton > button {
     width: 100%;
-    height: 52px;
-    border-radius: 15px;
+    height: 55px;
+    border-radius: 16px;
     border: none;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: 600;
     background: linear-gradient(to right, #00F5A0, #00D9F5);
-    color: black;
-    transition: 0.3s;
+    color: #111;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
-.stButton>button:hover {
-    transform: scale(1.02);
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
+/* Detection Box */
+.detect-box {
+    background: rgba(255,255,255,0.12);
+    padding: 14px;
+    border-radius: 14px;
+    margin-top: 18px;
+    font-size: 17px;
+    border-left: 4px solid #00F5A0;
+}
+
+/* Output Box */
 .output-box {
-    background: rgba(255,255,255,0.18);
-    padding: 25px;
+    background: rgba(255,255,255,0.15);
+    padding: 24px;
     border-radius: 18px;
     margin-top: 25px;
     font-size: 22px;
-    color: white;
+    line-height: 1.7;
+    border: 1px solid rgba(255,255,255,0.18);
 }
 
-.detect-box {
-    background: rgba(0,0,0,0.2);
-    padding: 12px;
-    border-radius: 12px;
-    margin-top: 15px;
-    font-size: 18px;
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: rgba(15,15,25,0.65);
+    backdrop-filter: blur(16px);
 }
 
+/* Footer */
 .footer {
-    text-align:center;
-    margin-top:40px;
-    color:white;
-    font-size:16px;
+    text-align: center;
+    margin-top: 45px;
+    color: rgba(255,255,255,0.85);
+    font-size: 15px;
 }
 
 </style>
@@ -100,28 +139,30 @@ st.markdown("""
 
 # ---------------- HEADER ----------------
 st.markdown(
-    "<div class='main-title'>🌍 AI Translator</div>",
-    unsafe_allow_html=True
-)
-
-st.markdown(
-    "<div class='subtitle'>Translate any language instantly with AI 🚀</div>",
+    """
+    <div class='main-title'>🌍 AI Language Translator</div>
+    <div class='subtitle'>
+    Translate any language instantly using AI and connect beyond language barriers ✨
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
 # ---------------- SIDEBAR ----------------
-st.sidebar.title("✨ Features")
+st.sidebar.title("✨ App Features")
 
-st.sidebar.info("""
+st.sidebar.markdown("""
+### 🌟 Features
 ✅ Auto Language Detection  
 ✅ AI Translation  
 ✅ Text to Speech  
 ✅ Download Translation  
-✅ Modern Glassmorphism UI  
-""")
+✅ Premium Glassmorphism UI  
 
-st.sidebar.markdown("---")
-st.sidebar.write("👩‍💻 Developed by Aliya Afzal")
+---
+### 👩‍💻 Developer
+Aliya Afzal
+""")
 
 # ---------------- LANGUAGES ----------------
 languages = {
@@ -138,12 +179,12 @@ languages = {
 }
 
 # ---------------- MAIN CARD ----------------
-st.markdown("<div class='glass'>", unsafe_allow_html=True)
+st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
 
 text = st.text_area(
     "✍ Enter Text",
-    height=200,
-    placeholder="Type any language here..."
+    height=220,
+    placeholder="Type or paste text in any language..."
 )
 
 target_lang = st.selectbox(
@@ -151,11 +192,14 @@ target_lang = st.selectbox(
     list(languages.keys())
 )
 
-# ---------------- TRANSLATE ----------------
+# ---------------- TRANSLATE BUTTON ----------------
 if st.button("🚀 Translate Now"):
 
     if text.strip() == "":
-        st.warning("⚠ Please enter text")
+        st.warning("⚠ Please enter some text")
+
+    elif len(text.strip()) < 2:
+        st.warning("⚠ Please enter more text for accurate detection")
 
     else:
         try:
@@ -164,23 +208,23 @@ if st.button("🚀 Translate Now"):
             detected_lang = detect(text)
 
             language_names = {
-                 "en": "English",
-                 "hi": "Hindi",
-                 "fr": "French",
-                 "de": "German",
-                 "es": "Spanish",
-                 "ar": "Arabic",
-                 "zh-cn": "Chinese",
-                 "ja": "Japanese",
-                 "ko": "Korean",
-                 "ru": "Russian"
-                     }
+                "en": "English",
+                "hi": "Hindi",
+                "fr": "French",
+                "de": "German",
+                "es": "Spanish",
+                "ar": "Arabic",
+                "zh-cn": "Chinese",
+                "ja": "Japanese",
+                "ko": "Korean",
+                "ru": "Russian"
+            }
 
-             detected_name = language_names.get(
-                  detected_lang.lower(),
-                  detected_lang.upper()
-                )
-   
+            detected_name = language_names.get(
+                detected_lang.lower(),
+                detected_lang.upper()
+            )
+
             st.markdown(
                 f"""
                 <div class='detect-box'>
@@ -191,7 +235,7 @@ if st.button("🚀 Translate Now"):
             )
 
             # -------- LOADING --------
-            with st.spinner("Translating..."):
+            with st.spinner("✨ Translating your text..."):
 
                 translated = GoogleTranslator(
                     source='auto',
@@ -202,7 +246,7 @@ if st.button("🚀 Translate Now"):
             st.markdown(
                 f"""
                 <div class='output-box'>
-                <b>✨ Translated Text:</b><br><br>
+                <b>✨ Translated Text</b><br><br>
                 {translated}
                 </div>
                 """,
@@ -226,13 +270,17 @@ if st.button("🚀 Translate Now"):
                 mime="text/plain"
             )
 
-        except:
-            st.error("❌ Translation Failed")
+        except Exception as e:
+            st.error("❌ Translation failed. Please try again.")
 
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------- FOOTER ----------------
 st.markdown(
-    "<div class='footer'>✨ Built with Streamlit & AI</div>",
+    """
+    <div class='footer'>
+    ✨ Built with Streamlit & AI
+    </div>
+    """,
     unsafe_allow_html=True
 )
