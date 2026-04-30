@@ -5,7 +5,7 @@ from langdetect import detect
 
 # ---------------- PAGE CONFIG ----------------
 st.set_page_config(
-    page_title="AI Translator",
+    page_title="AI Language Translator",
     page_icon="🌍",
     layout="centered"
 )
@@ -20,13 +20,13 @@ html, body, [class*="css"] {
     font-family: 'Poppins', sans-serif;
 }
 
+/* Background */
 .stApp {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff758c 100%);
-    background-attachment: fixed;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 45%, #ff758c 100%);
     color: white;
 }
 
-/* Hide Streamlit menu/footer */
+/* Hide Streamlit branding */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
@@ -37,93 +37,84 @@ header {visibility: hidden;}
     font-size: 58px;
     font-weight: 700;
     color: white;
-    margin-top: 15px;
-    letter-spacing: 1px;
+    margin-top: 20px;
 }
 
 .subtitle {
     text-align: center;
     font-size: 20px;
-    color: rgba(255,255,255,0.85);
-    margin-bottom: 40px;
+    color: rgba(255,255,255,0.88);
+    margin-bottom: 35px;
 }
 
-/* Glass Card */
-.glass-card {
-    background: rgba(255,255,255,0.12);
-    padding: 35px;
-    border-radius: 28px;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-}
-
-/* Text Area */
+/* Input Box */
 .stTextArea textarea {
-    border-radius: 18px !important;
-    background: rgba(255,255,255,0.10) !important;
+    background: rgba(255,255,255,0.18) !important;
     color: white !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
+    border-radius: 22px !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    padding: 18px !important;
     font-size: 18px !important;
-    padding: 15px !important;
+    backdrop-filter: blur(8px);
 }
 
 .stTextArea textarea::placeholder {
-    color: rgba(255,255,255,0.6) !important;
+    color: rgba(255,255,255,0.65);
 }
 
-/* Select Box */
+/* Selectbox */
 .stSelectbox div[data-baseweb="select"] {
-    background: rgba(255,255,255,0.10) !important;
-    border-radius: 14px !important;
+    background: rgba(255,255,255,0.18) !important;
+    border-radius: 16px !important;
     color: white !important;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
-/* Button */
+/* Translate Button */
 .stButton > button {
     width: 100%;
     height: 55px;
-    border-radius: 16px;
     border: none;
+    border-radius: 16px;
     font-size: 19px;
     font-weight: 600;
+    color: black;
     background: linear-gradient(to right, #00F5A0, #00D9F5);
-    color: #111;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
 }
 
 .stButton > button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
-/* Detection Box */
-.detect-box {
-    background: rgba(255,255,255,0.12);
-    padding: 14px;
-    border-radius: 14px;
-    margin-top: 18px;
-    font-size: 17px;
-    border-left: 4px solid #00F5A0;
-}
-
-/* Output Box */
-.output-box {
-    background: rgba(255,255,255,0.15);
-    padding: 24px;
+/* Detection Card */
+.detect-card {
+    background: rgba(255,255,255,0.18);
+    padding: 15px;
     border-radius: 18px;
     margin-top: 25px;
+    border-left: 5px solid #00F5A0;
+    font-size: 18px;
+}
+
+/* Output Card */
+.output-card {
+    background: rgba(255,255,255,0.20);
+    padding: 28px;
+    border-radius: 24px;
+    margin-top: 25px;
+    border: 1px solid rgba(255,255,255,0.22);
     font-size: 22px;
-    line-height: 1.7;
-    border: 1px solid rgba(255,255,255,0.18);
+    line-height: 1.8;
+    color: white;
+    backdrop-filter: blur(10px);
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: rgba(15,15,25,0.65);
-    backdrop-filter: blur(16px);
+    background: rgba(18,18,30,0.65);
+    backdrop-filter: blur(18px);
 }
 
 /* Footer */
@@ -138,28 +129,27 @@ section[data-testid="stSidebar"] {
 """, unsafe_allow_html=True)
 
 # ---------------- HEADER ----------------
-st.markdown(
-    """
-    <div class='main-title'>🌍 AI Language Translator</div>
-    <div class='subtitle'>
-    Translate any language instantly using AI and connect beyond language barriers ✨
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div class='main-title'>🌍 AI Language Translator</div>
+<div class='subtitle'>
+Translate any language instantly using AI and connect beyond language barriers ✨
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------- SIDEBAR ----------------
-st.sidebar.title("✨ App Features")
+st.sidebar.title("✨ Features")
 
 st.sidebar.markdown("""
-### 🌟 Features
+### 🌟 App Features
+
 ✅ Auto Language Detection  
-✅ AI Translation  
-✅ Text to Speech  
+✅ Real-Time AI Translation  
+✅ Text-to-Speech  
 ✅ Download Translation  
-✅ Premium Glassmorphism UI  
+✅ Modern Glassmorphism UI  
 
 ---
+
 ### 👩‍💻 Developer
 Aliya Afzal
 """)
@@ -178,9 +168,7 @@ languages = {
     "Russian": "ru"
 }
 
-# ---------------- MAIN CARD ----------------
-st.markdown("<div class='glass-card'>", unsafe_allow_html=True)
-
+# ---------------- INPUT ----------------
 text = st.text_area(
     "✍ Enter Text",
     height=220,
@@ -188,24 +176,31 @@ text = st.text_area(
 )
 
 target_lang = st.selectbox(
-    "🌍 Translate To",
+    "🌐 Translate To",
     list(languages.keys())
 )
 
-# ---------------- TRANSLATE BUTTON ----------------
-if st.button("🚀 Translate Now"):
+# ---------------- CENTER BUTTON ----------------
+col1, col2, col3 = st.columns([1,2,1])
+
+with col2:
+    translate = st.button("🚀 Translate Now")
+
+# ---------------- TRANSLATION ----------------
+if translate:
 
     if text.strip() == "":
         st.warning("⚠ Please enter some text")
 
-    elif len(text.strip()) < 2:
-        st.warning("⚠ Please enter more text for accurate detection")
-
     else:
+
         try:
 
-            # -------- DETECT LANGUAGE --------
-            detected_lang = detect(text)
+            # -------- SMART DETECTION --------
+            if len(text.split()) < 3:
+                detected_lang = "en"
+            else:
+                detected_lang = detect(text)
 
             language_names = {
                 "en": "English",
@@ -225,27 +220,30 @@ if st.button("🚀 Translate Now"):
                 detected_lang.upper()
             )
 
+            # -------- DETECTED LANGUAGE --------
             st.markdown(
                 f"""
-                <div class='detect-box'>
-                🔍 Detected Language: <b>{detected_name}</b>
+                <div class='detect-card'>
+                🔍 <b>Detected Language:</b> {detected_name}
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
             # -------- LOADING --------
-            with st.spinner("✨ Translating your text..."):
+            with st.spinner("✨ Translating..."):
 
                 translated = GoogleTranslator(
                     source='auto',
                     target=languages[target_lang]
                 ).translate(text)
 
+            st.toast("Translation completed ✨")
+
             # -------- OUTPUT --------
             st.markdown(
                 f"""
-                <div class='output-box'>
+                <div class='output-card'>
                 <b>✨ Translated Text</b><br><br>
                 {translated}
                 </div>
@@ -270,17 +268,12 @@ if st.button("🚀 Translate Now"):
                 mime="text/plain"
             )
 
-        except Exception as e:
+        except:
             st.error("❌ Translation failed. Please try again.")
 
-st.markdown("</div>", unsafe_allow_html=True)
-
 # ---------------- FOOTER ----------------
-st.markdown(
-    """
-    <div class='footer'>
-    ✨ Built with Streamlit & AI
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div class='footer'>
+✨ Built with Streamlit & AI
+</div>
+""", unsafe_allow_html=True)
