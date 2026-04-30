@@ -22,66 +22,67 @@ html, body, [class*="css"] {
 
 /* Background */
 .stApp {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 45%, #ff758c 100%);
-    color: white;
+    background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+    color: #2d2d2d;
 }
 
-/* Hide Streamlit branding */
+/* Hide Streamlit Branding */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
-/* Main Title */
+/* Main Heading */
 .main-title {
     text-align: center;
     font-size: 58px;
     font-weight: 700;
-    color: white;
+    color: #222;
     margin-top: 20px;
 }
 
+/* Subtitle */
 .subtitle {
     text-align: center;
     font-size: 20px;
-    color: rgba(255,255,255,0.88);
-    margin-bottom: 35px;
+    color: #444;
+    margin-bottom: 40px;
 }
 
-/* Input Box */
+/* Text Area */
 .stTextArea textarea {
-    background: rgba(255,255,255,0.18) !important;
-    color: white !important;
-    border-radius: 22px !important;
-    border: 1px solid rgba(255,255,255,0.25) !important;
+    background: rgba(255,255,255,0.55) !important;
+    color: #222 !important;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255,255,255,0.4) !important;
     padding: 18px !important;
     font-size: 18px !important;
     backdrop-filter: blur(8px);
 }
 
 .stTextArea textarea::placeholder {
-    color: rgba(255,255,255,0.65);
+    color: #666 !important;
 }
 
-/* Selectbox */
+/* Select Box */
 .stSelectbox div[data-baseweb="select"] {
-    background: rgba(255,255,255,0.18) !important;
+    background: rgba(255,255,255,0.55) !important;
     border-radius: 16px !important;
-    color: white !important;
-    border: 1px solid rgba(255,255,255,0.2);
+    color: #222 !important;
+    border: 1px solid rgba(255,255,255,0.4);
 }
 
-/* Translate Button */
+/* Button */
 .stButton > button {
     width: 100%;
     height: 55px;
     border: none;
     border-radius: 16px;
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 600;
-    color: black;
-    background: linear-gradient(to right, #00F5A0, #00D9F5);
+    color: white;
+    background: linear-gradient(to right, #7F7FD5, #86A8E7);
     transition: 0.3s ease;
-    box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.12);
 }
 
 .stButton > button:hover {
@@ -90,38 +91,40 @@ header {visibility: hidden;}
 
 /* Detection Card */
 .detect-card {
-    background: rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.45);
     padding: 15px;
     border-radius: 18px;
     margin-top: 25px;
-    border-left: 5px solid #00F5A0;
+    border-left: 5px solid #7F7FD5;
     font-size: 18px;
+    color: #222;
 }
 
 /* Output Card */
 .output-card {
-    background: rgba(255,255,255,0.20);
+    background: rgba(255,255,255,0.45);
     padding: 28px;
     border-radius: 24px;
     margin-top: 25px;
-    border: 1px solid rgba(255,255,255,0.22);
-    font-size: 22px;
+    border: 1px solid rgba(255,255,255,0.4);
+    font-size: 20px;
     line-height: 1.8;
-    color: white;
+    color: #222;
     backdrop-filter: blur(10px);
+    min-height: 120px;
 }
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: rgba(18,18,30,0.65);
-    backdrop-filter: blur(18px);
+    background: rgba(255,255,255,0.25);
+    backdrop-filter: blur(14px);
 }
 
 /* Footer */
 .footer {
     text-align: center;
     margin-top: 45px;
-    color: rgba(255,255,255,0.85);
+    color: #444;
     font-size: 15px;
 }
 
@@ -131,6 +134,7 @@ section[data-testid="stSidebar"] {
 # ---------------- HEADER ----------------
 st.markdown("""
 <div class='main-title'>🌍 AI Language Translator</div>
+
 <div class='subtitle'>
 Translate any language instantly using AI and connect beyond language barriers ✨
 </div>
@@ -146,7 +150,7 @@ st.sidebar.markdown("""
 ✅ Real-Time AI Translation  
 ✅ Text-to-Speech  
 ✅ Download Translation  
-✅ Modern Glassmorphism UI  
+✅ Modern Professional UI  
 
 ---
 
@@ -186,7 +190,7 @@ col1, col2, col3 = st.columns([1,2,1])
 with col2:
     translate = st.button("🚀 Translate Now")
 
-# ---------------- TRANSLATION ----------------
+# ---------------- TRANSLATE ----------------
 if translate:
 
     if text.strip() == "":
@@ -197,11 +201,20 @@ if translate:
         try:
 
             # -------- SMART DETECTION --------
-            if len(text.split()) < 3:
+            common_english_words = [
+                "hello", "hi", "i", "am", "my",
+                "name", "how", "are", "you",
+                "what", "is"
+            ]
+
+            text_lower = text.lower()
+
+            if any(word in text_lower for word in common_english_words):
                 detected_lang = "en"
             else:
                 detected_lang = detect(text)
 
+            # -------- LANGUAGE NAMES --------
             language_names = {
                 "en": "English",
                 "hi": "Hindi",
@@ -220,7 +233,7 @@ if translate:
                 detected_lang.upper()
             )
 
-            # -------- DETECTED LANGUAGE --------
+            # -------- DETECTION CARD --------
             st.markdown(
                 f"""
                 <div class='detect-card'>
@@ -230,7 +243,7 @@ if translate:
                 unsafe_allow_html=True
             )
 
-            # -------- LOADING --------
+            # -------- TRANSLATION --------
             with st.spinner("✨ Translating..."):
 
                 translated = GoogleTranslator(
