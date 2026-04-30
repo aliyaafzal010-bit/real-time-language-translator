@@ -77,7 +77,8 @@ label {
     border: 1px solid rgba(255,255,255,0.4);
 }
 
-.stSelectbox * {
+/* Selectbox Text */
+.stSelectbox div[data-baseweb="select"] span {
     color: #222 !important;
     font-weight: 500;
 }
@@ -199,7 +200,7 @@ languages = {
 # ---------------- INPUT ----------------
 text = st.text_area(
     "✍ Enter Text",
-    height=220,
+    height=180,
     placeholder="Type or paste text in any language..."
 )
 
@@ -209,10 +210,7 @@ target_lang = st.selectbox(
 )
 
 # ---------------- BUTTON ----------------
-col1, col2, col3 = st.columns([1,2,1])
-
-with col2:
-    translate = st.button("🚀 Translate Now")
+translate = st.button("🚀 Translate Now")
 
 # ---------------- TRANSLATION ----------------
 if translate:
